@@ -2,15 +2,18 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { API_PREFIX } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
-  app.enableVersioning({
-    type: VersioningType.URI,
-    defaultVersion: '1',
-  });
+  app
+    .enableVersioning({
+      type: VersioningType.URI,
+      defaultVersion: '1',
+    })
+    .setGlobalPrefix(API_PREFIX);
 
   const config = new DocumentBuilder()
     .setTitle('E-Commerce Service')
