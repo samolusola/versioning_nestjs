@@ -29,3 +29,20 @@ export class CreateOrderDto {
   @IsPositive()
   totalAmount: number;
 }
+
+export class CreateOrderDtoV2 {
+  @IsString()
+  userId: string;
+
+  @ValidateNested({ each: true })
+  @Type(() => ProductDto)
+  @IsArray()
+  @ArrayMinSize(1)
+  products: ProductDto[];
+
+  @IsPositive()
+  totalAmount: number;
+
+  @IsString()
+  tag: string;
+}
